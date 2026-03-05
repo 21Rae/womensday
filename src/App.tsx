@@ -1389,7 +1389,7 @@ const ChatPage = () => {
   const chatRef = React.useRef<any>(null);
 
   const getApiKey = () => {
-    return (window as any).process?.env?.API_KEY || (window as any).process?.env?.GEMINI_API_KEY || '';
+    return process.env.API_KEY || process.env.GEMINI_API_KEY || '';
   };
 
   const initChat = () => {

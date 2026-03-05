@@ -1441,9 +1441,14 @@ const ChatPage = () => {
     } catch (error: any) {
       console.error("Chat error:", error);
       let errorMessage = "I'm having trouble connecting right now. Please ensure you are in a safe location and try again later.";
-      if (error.message?.includes("API_KEY_INVALID") || error.message?.includes("not found") || error.message?.includes("403")) {
-        errorMessage = "I'm having trouble accessing my intelligence core. This might be due to an invalid or missing API key.";
+      
+      const errorMsg = error.message || "";
+      if (errorMsg.includes("API_KEY_INVALID") || errorMsg.includes("not found") || errorMsg.includes("403") || errorMsg.includes("invalid")) {
+        errorMessage = "I'm having trouble accessing my intelligence core. This might be due to an invalid or missing API key. Error: " + errorMsg;
+      } else if (errorMsg) {
+        errorMessage = "Connection error: " + errorMsg;
       }
+      
       setMessages(prev => [...prev, { role: 'bot', text: errorMessage }]);
     } finally {
       setIsLoading(false);
